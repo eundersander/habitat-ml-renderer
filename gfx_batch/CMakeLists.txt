@@ -49,11 +49,28 @@ else()
   message(FATAL_ERROR "Unsupported platform")
 endif()
 
+# See also target_link_libraries in this file. See also build_magnum.sh -DMAGNUM_WITH_MESHTOOLS=ON and related flags. See also https://doc.magnum.graphics/magnum/building.html#building-features.
 find_package(Magnum REQUIRED 
   ${WINDOWLESS_APPLICATION_PACKAGE} 
   MeshTools
   OpenGLTester
-  DebugTools)
+  DebugTools
+  # AnyImageConverter
+  AnySceneImporter
+  AnyImageImporter
+)
+
+# See also build_magnum.sh -DMAGNUM_WITH_GLTFIMPORTER=ON and related flags. See also https://doc.magnum.graphics/magnum/building-plugins.html#building-plugins-manual.
+find_package(
+  MagnumPlugins
+  REQUIRED
+  GltfImporter
+#   StbImageImporter
+#   KtxImporter
+#   StbImageConverter
+#   OPTIONAL_COMPONENTS GltfSceneConverter KtxImageConverter StanfordImporter
+#                       OpenExrImporter OpenExrImageConverter
+)
 
 target_link_libraries(
   gfx_batch
@@ -64,12 +81,16 @@ target_link_libraries(
   PUBLIC Magnum::GL
          Magnum::Magnum
          Magnum::SceneTools
-         Magnum::MeshTools
          Magnum::Shaders
          Magnum::Trade
          Magnum::WindowlessApplication
+         Magnum::MeshTools
          Magnum::OpenGLTester
          Magnum::DebugTools
+         # Magnum::AnyImageConverter
+         Magnum::AnySceneImporter
+         Magnum::AnyImageImporter
+
   # Not linking any plugins here, as the renderer itself doesn't directly rely
   # on any of them. That also makes the plugins implicitly registered in
   # *every* target that links to gfx_batch, which is far from ideal. Only the

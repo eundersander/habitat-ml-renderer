@@ -1,4 +1,13 @@
 #!/bin/bash
+
+# Get the site-packages directory
+PYTHON_SITE_PACKAGES=$(python -c "import site; print(site.getsitepackages()[0])")
+# Check if the pybind11 directory exists
+if [ ! -d "${PYTHON_SITE_PACKAGES}/pybind11" ]; then
+  echo "Error: pybind11 directory not found at ${PYTHON_SITE_PACKAGES}" >&2
+  exit 1
+fi
+
 # Set the default build type and directory
 BUILD_TYPE="Release"
 BUILD_DIR="build"
@@ -26,6 +35,6 @@ fi
 # Navigate into the build directory
 cd ${BUILD_DIR}
 # Run CMake with the specified build type
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../external/install_root ..
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../magnum_root/install_root -DCMAKE_PREFIX_PATH=${PYTHON_SITE_PACKAGES} ..
 # Run make to build the project
-make && cp ./bindings/*.so ../
+make && cp ./habitat_ml_renderer/*.so ../

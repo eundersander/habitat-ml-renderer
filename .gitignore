@@ -1,14 +1,17 @@
 
 # external folder created by build_magnum.sh
-external/
+magnum_root/install_root
+magnum_root/corrade
+magnum_root/magnum
+magnum_root/magnum-plugins
 
 # intermediate build files
 build/
 build_debug/
-bps_pytorch/bps_pytorch.egg-info/
+cuda_tensor_helper/cuda_tensor_helper.egg-info/
 
 # our binary python extensions
-habitat_ml_renderer_python.*.so
-bps_pytorch/bps_pytorch.*.so
+habitat_ml_renderer.*.so
+cuda_tensor_helper/cuda_tensor_helper.*.so
 
 .vscode/

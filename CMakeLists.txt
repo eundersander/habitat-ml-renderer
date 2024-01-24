@@ -47,14 +47,15 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # todo: figure out what to use for project and what to put for languages
 project(my_project LANGUAGES C CXX)
 
-set(CMAKE_PREFIX_PATH "/home/eundersander/mambaforge/envs/habitat_ml_renderer1/lib/python3.11/site-packages")
-
 # this is not working; not sure why
 # set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/external/install_root")
 
 # todo: when this is off, figure out why we hit runtime undefined symbol: cudaGraphicsMapResources
 set(BUILD_WITH_CUDA ON)
-
+if(BUILD_WITH_CUDA)
+  # C++ preprocessor also uses this flag, so add this defintion
+  add_definitions(-DBUILD_WITH_CUDA)
+endif()
 
 enable_language(CUDA)
 
@@ -75,4 +76,4 @@ find_package(
 find_package(Corrade REQUIRED Utility)
 
 add_subdirectory(gfx_batch)
-add_subdirectory(bindings)
+add_subdirectory(habitat_ml_renderer)

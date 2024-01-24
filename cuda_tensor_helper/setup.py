@@ -7,11 +7,11 @@ from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 import os
 
 setup(
-    name="bps_pytorch",
+    name="cuda_tensor_helper",
     ext_modules=[
         CUDAExtension(
-            name="bps_pytorch",
-            sources=["pytorch.cpp"],
+            name="cuda_tensor_helper",
+            sources=["cuda_tensor_helper.cpp"],
             extra_compile_args=[],
             extra_link_args=[],
         )
