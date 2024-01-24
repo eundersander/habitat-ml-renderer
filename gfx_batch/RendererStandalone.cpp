@@ -28,16 +28,15 @@
 #error unsupported platform
 #endif
 
-#ifdef ESP_BUILD_WITH_CUDA
+#ifdef BUILD_WITH_CUDA
 #include <cuda_gl_interop.h>
 
-#include "HelperCuda.h"
+#include "cuda_helpers/HelperCuda.h"
 #endif
 
 namespace Cr = Corrade;
 namespace Mn = Magnum;
 
-namespace esp {
 namespace gfx_batch {
 
 struct RendererStandaloneConfiguration::State {
@@ -70,7 +69,7 @@ struct RendererStandalone::State {
   Mn::GL::Framebuffer framebuffer{Mn::NoCreate};
   Mn::GL::BufferImage2D colorBuffer{Mn::NoCreate};
   Mn::GL::BufferImage2D depthBuffer{Mn::NoCreate};
-#ifdef ESP_BUILD_WITH_CUDA
+#ifdef BUILD_WITH_CUDA
   cudaGraphicsResource* cudaColorBuffer{};
   cudaGraphicsResource* cudaDepthBuffer{};
 #endif
@@ -97,7 +96,7 @@ struct RendererStandalone::State {
     depth = Mn::GL::Renderbuffer{};
   }
 
-#ifdef ESP_BUILD_WITH_CUDA
+#ifdef BUILD_WITH_CUDA
   ~State() {
     /* Should be unmapped before the GL object gets destroyed, I guess? */
     if (cudaColorBuffer) {
@@ -201,7 +200,7 @@ void RendererStandalone::depthImageInto(const Magnum::Range2Di& rectangle,
   return state_->framebuffer.read(rectangle, image);
 }
 
-#ifdef ESP_BUILD_WITH_CUDA
+#ifdef BUILD_WITH_CUDA
 const void* RendererStandalone::colorCudaBufferDevicePointer() {
   /* If the CUDA buffer exists already, it's mapped from the previous call.
      Unmap it first so we can read into it from GL. */
@@ -264,4 +263,3 @@ const void* RendererStandalone::depthCudaBufferDevicePointer() {
 #endif
 
 }  // namespace gfx_batch
-}  // namespace esp

@@ -12,14 +12,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 // These are CUDA Helper functions for initialization and error checking
 
-#ifndef ESP_GFX_CUDA_HELPERS_HELPER_CUDA_H
-#define ESP_GFX_CUDA_HELPERS_HELPER_CUDA_H
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <HelperString.h>
+#include "HelperString.h"
 
 #ifndef EXIT_WAIVED
 #define EXIT_WAIVED 2
@@ -1218,5 +1217,3 @@ inline bool checkCudaCapabilities(int major_version, int minor_version) {
 #endif
 
 // end of CUDA Helper Functions
-
-#endif  // ESP_GFX_CUDA_HELPERS_HELPER_

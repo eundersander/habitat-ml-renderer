@@ -2,57 +2,6 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-# todo: figure out what to put here
-cmake_minimum_required(VERSION 3.12)
-
-# todo: figure out what to use for project and what to put for languages
-project(my_project LANGUAGES C CXX)
-
-# some cmake policy stuff copied from magnum-examples
-# Don't restrict INTERPROCEDURAL_OPTIMIZATION only for icc on Linux
-if(POLICY CMP0069)
-    cmake_policy(SET CMP0069 NEW)
-endif()
-# If CMAKE_AUTOMOC is set, all uses of corrade_add_resource() would otherwise
-# complain on 3.10 that AUTOMOC is not processing GENERATED files
-if(POLICY CMP0071)
-    cmake_policy(SET CMP0071 NEW)
-endif()
-# Allow <PackageName>_ROOT to be used on 3.12+ to point to per-package install
-# locations that find_package(PackageName) subsequently picks up
-if(POLICY CMP0074)
-    cmake_policy(SET CMP0074 NEW)
-endif()
-# Allow also <PACKAGENAME>_ROOT (i.e., uppercase), on 3.27+
-if(POLICY CMP0144)
-    cmake_policy(SET CMP0144 NEW)
-endif()
-# Superprojects can use just set(MAGNUM_WITH_BLAH ON) without FORCE CACHE on
-# 3.13+
-if(POLICY CMP0077)
-    cmake_policy(SET CMP0077 NEW)
-endif()
-
-# something about a list command used by Magnum
-if(POLICY CMP0057)
-    cmake_policy(SET CMP0057 NEW)
-endif()
-
-# something else about a list command used by Magnum
-if(POLICY CMP0007)
-    cmake_policy(SET CMP0007 NEW)
-endif()
-
-find_package(
-  Magnum
-  REQUIRED
-  GL
-  SceneTools
-  Shaders
-  Trade
-)
-find_package(Corrade REQUIRED Utility)
-
 set(
   gfx_batch_SOURCES
   DepthUnprojection.cpp
@@ -63,6 +12,8 @@ set(
   RendererStandalone.h
   Hbao.cpp
   Hbao.h
+  Test.cpp
+  Test.h
 )
 
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
@@ -73,33 +24,36 @@ add_library(
   gfx_batch STATIC
   ${gfx_batch_SOURCES}
 )
-# For esp/core/configure.h
-# TODO move configure.h directly to esp/
-target_include_directories(gfx_batch PUBLIC ${PROJECT_BINARY_DIR})
+
+# make this library's headers available to users
+target_include_directories(gfx_batch PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
 if(BUILD_WITH_CUDA)
+  find_package(CUDA REQUIRED)
   target_include_directories(
     gfx_batch PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
                      ${CMAKE_CURRENT_LIST_DIR}/cuda_helpers
   )
-
-  target_link_libraries(gfx_batch PUBLIC ${CUDART_LIBRARY})
+  target_link_libraries(gfx_batch PUBLIC ${CUDA_LIBRARIES})
+  message("CUDA_LIBRARIES: ${CUDA_LIBRARIES}")  
+else()
+  message("BUILD_WITH_CUDA is off")
 endif()
 
-# Find appropriate windowless library for the standalone renderer
+
 if(MAGNUM_TARGET_EGL)
-  # Includes also Emscripten
-  find_package(Magnum REQUIRED WindowlessEglApplication)
-elseif(CORRADE_TARGET_APPLE)
-  find_package(Magnum REQUIRED WindowlessCglApplication)
+  set(WINDOWLESS_APPLICATION_PACKAGE "WindowlessEglApplication")
 elseif(CORRADE_TARGET_UNIX)
-  # Mainly for builds with external Magnum that might not have TARGET_EGL
-  # enabled
-  find_package(Magnum REQUIRED WindowlessGlxApplication)
-elseif(CORRADE_TARGET_WINDOWS)
-  find_package(Magnum REQUIRED WindowlessWglApplication)
+  set(WINDOWLESS_APPLICATION_PACKAGE "WindowlessGlxApplication")
 else()
   message(FATAL_ERROR "Unsupported platform")
 endif()
+
+find_package(Magnum REQUIRED 
+  ${WINDOWLESS_APPLICATION_PACKAGE} 
+  MeshTools
+  OpenGLTester
+  DebugTools)
 
 target_link_libraries(
   gfx_batch
@@ -110,9 +64,12 @@ target_link_libraries(
   PUBLIC Magnum::GL
          Magnum::Magnum
          Magnum::SceneTools
+         Magnum::MeshTools
          Magnum::Shaders
          Magnum::Trade
          Magnum::WindowlessApplication
+         Magnum::OpenGLTester
+         Magnum::DebugTools
   # Not linking any plugins here, as the renderer itself doesn't directly rely
   # on any of them. That also makes the plugins implicitly registered in
   # *every* target that links to gfx_batch, which is far from ideal. Only the

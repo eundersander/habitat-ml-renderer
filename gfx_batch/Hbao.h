@@ -2,15 +2,13 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-#ifndef ESP_GFX_BATCH_HBAO_H_
-#define ESP_GFX_BATCH_HBAO_H_
+#pragma once
 
 #include <Corrade/Containers/Pointer.h>
 #include <Magnum/GL/GL.h>
 #include <Magnum/Magnum.h>
 #include <Magnum/Math/Vector2.h>
 
-namespace esp {
 namespace gfx_batch {
 
 enum class HbaoFlag {
@@ -185,6 +183,3 @@ class Hbao {
 };
 
 }  // namespace gfx_batch
-}  // namespace esp
-
-#endif

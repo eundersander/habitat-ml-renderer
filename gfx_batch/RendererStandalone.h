@@ -2,12 +2,10 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-#ifndef ESP_GFX_BATCH_RENDERER_STANDALONE_H_
-#define ESP_GFX_BATCH_RENDERER_STANDALONE_H_
+#pragma once
 
 #include "Renderer.h"
 
-namespace esp {
 namespace gfx_batch {
 
 /**
@@ -210,7 +208,7 @@ class RendererStandalone : public Renderer {
   void depthImageInto(const Magnum::Range2Di& rectangle,
                       const Magnum::MutableImageView2D& image);
 
-#if defined(ESP_BUILD_WITH_CUDA) || defined(DOXYGEN_GENERATING_OUTPUT)
+#if defined(BUILD_WITH_CUDA) || defined(DOXYGEN_GENERATING_OUTPUT)
   /**
    * @brief Retrieve the rendered color output as a CUDA device pointer
    *
@@ -238,6 +236,3 @@ class RendererStandalone : public Renderer {
 };
 
 }  // namespace gfx_batch
-}  // namespace esp
-
-#endif

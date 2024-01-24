@@ -2,13 +2,11 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-#ifndef ESP_GFX_DEPTHUNPROJECTION_H_
-#define ESP_GFX_DEPTHUNPROJECTION_H_
+#pragma once
 
 #include <Corrade/Containers/EnumSet.h>
 #include <Magnum/GL/AbstractShaderProgram.h>
 
-namespace esp {
 namespace gfx_batch {
 
 /**
@@ -153,6 +151,3 @@ void unprojectDepth(
     const Corrade::Containers::StridedArrayView2D<Magnum::Float>& depth);
 
 }  // namespace gfx_batch
-}  // namespace esp
-
-#endif  // ESP_GFX_DEPTHUNPROJECTION_H_

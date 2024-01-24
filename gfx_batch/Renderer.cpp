@@ -49,7 +49,6 @@
 namespace Cr = Corrade;
 namespace Mn = Magnum;
 
-namespace esp {
 namespace gfx_batch {
 
 // clang-tidy you're NOT HELPING
@@ -1378,4 +1377,3 @@ SceneStats Renderer::sceneStats(Mn::UnsignedInt sceneId) const {
 }
 
 }  // namespace gfx_batch
-}  // namespace esp

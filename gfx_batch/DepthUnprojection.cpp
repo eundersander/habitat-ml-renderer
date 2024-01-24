@@ -21,7 +21,6 @@ static void importShaderResources() {
   CORRADE_RESOURCE_INITIALIZE(GfxBatchShaderResources)
 }
 
-namespace esp {
 namespace gfx_batch {
 
 namespace {
@@ -133,4 +132,3 @@ void unprojectDepth(
 }
 
 }  // namespace gfx_batch
-}  // namespace esp

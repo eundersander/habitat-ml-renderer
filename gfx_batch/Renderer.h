@@ -2,15 +2,13 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-#ifndef ESP_GFX_BATCH_RENDERER_H_
-#define ESP_GFX_BATCH_RENDERER_H_
+#pragma once
 
 #include <Corrade/Containers/Pointer.h>
 #include <Magnum/GL/GL.h>
 #include <Magnum/Magnum.h>
 #include <cstddef>
 
-namespace esp {
 namespace gfx_batch {
 
 /**
@@ -774,6 +772,3 @@ struct SceneStats {
 };
 
 }  // namespace gfx_batch
-}  // namespace esp
-
-#endif

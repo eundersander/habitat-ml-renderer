@@ -36,7 +36,6 @@ static void importShaderResources() {
   CORRADE_RESOURCE_INITIALIZE(GfxBatchShaderResources)
 }
 
-namespace esp {
 namespace gfx_batch {
 
 namespace Cr = Corrade;
@@ -1080,4 +1079,3 @@ void Hbao::drawCacheAwareInternal(Mn::GL::AbstractFramebuffer& output) {
 }  // drawCacheAwareInternal
 
 }  // namespace gfx_batch
-}  // namespace esp
