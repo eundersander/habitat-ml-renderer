@@ -10,13 +10,13 @@ This package is based on [Habitat-sim](https://github.com/facebookresearch/habit
 # Todo
 * Flesh out our python test ([test.py](./test.py))
     * Fix the unintuitive python interfaces for creating image tensors and updating them after drawing.
-        * Currently, the confusingly-named `rgba` is used for both functions.
+        * Currently, the confusingly-named `rgba` is used for both creating and updating.
         * The C++ function `Renderer::colorCudaBufferDevicePointer` is also misleading because it suggests you only need to call it once at startup; you actually have to call this after every draw.
         * We need to update both the RGB and depth interfaces.
     * Populate scenes with instances by calling `add_node_hierarchy(scene_id, "Duck")`.
-    * Set a camera (add bindings as necessary).
-    * Save out color and depth tensors as images so we can visually inspect the end-to-end results.
-    * Update instances between draws using `Renderer::transformations` (add bindings as necessary); render multiple images.
+    * Add a Python batch API for `Renderer::updateCamera`. The Python caller should pass in numpy arrays (`py::array_t<float>` in pybind11) that specify all data for all envs, e.g. a batch camera matrix would be (#envs x 4 x 4). Set env cameras in test.py.
+    * Add a Python batch API for `Renderer::transformations`. It's not yet clear to me what this should look like, since different envs might have different number of instances. Update env instances between steps to produce a sequence of batch image tensors.
+    * Save out color and depth tensors as image files so we can visually inspect the end-to-end results.
     * Experiment with lights (add bindings as necessary).
 * Repo cleanup
     * Currently the habitat_ml_renderer extension `.so` is copied to the project root but not actually installed into the python environment.
