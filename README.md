@@ -13,10 +13,7 @@ This package is based on [Habitat-sim](https://github.com/facebookresearch/habit
         * Currently, the confusingly-named `rgba` is used for both creating and updating.
         * The C++ function `Renderer::colorCudaBufferDevicePointer` is also misleading because it suggests you only need to call it once at startup; you actually have to call this after every draw.
         * We need to update both the RGB and depth interfaces.
-    * Populate scenes with instances by calling `add_node_hierarchy(scene_id, "Duck")`.
-    * Add a Python batch API for `Renderer::updateCamera`. The Python caller should pass in numpy arrays (`py::array_t<float>` in pybind11) that specify all data for all envs, e.g. a batch camera matrix would be (#envs x 4 x 4). Set env cameras in test.py.
-    * Add a Python batch API for `Renderer::transformations`. It sounds like we should at least have one version of this API that assumes the same number of instanes per env, thus this is a simple (non-ragged) (#envs x #num-instances x 4 x 4) tensor.
-    * Save out color and depth tensors as image files so we can visually inspect the end-to-end results.
+    * Update instances between draws using `Renderer::transformations` (add bindings as necessary); render multiple images.
     * Experiment with lights (add bindings as necessary).
 * Repo cleanup
     * Currently the habitat_ml_renderer extension `.so` is copied to the project root but not actually installed into the python environment.
@@ -34,7 +31,8 @@ This package is based on [Habitat-sim](https://github.com/facebookresearch/habit
 
 * `habitat_ml_renderer:` the Python extension module. It's primarily C++ pybind11 code wrapping renderer functionality provided by `gfx_batch`.
 * `gfx_batch:` a pure C++ library that implements the renderer (on top of Magnum). It's essentially a copy-paste of the [`esp/gfx_batch`](https://github.com/facebookresearch/habitat-sim/tree/main/src/esp/gfx_batch) module in Habitat-sim.
-* `shaders:` used by `gfx_batch` (and should probably be moved inside * `cuda_tensor_helper:` a tiny Python extension module that provides helpers to convert CUDA memory pointers to PyTorch tensors. It's separate from `habitat_ml_renderer` because it must be [built](cuda_tensor_helper/setup.py) using a special PyTorch-provided CUDAExtension helper.
+* `shaders:` used by `gfx_batch` (and should probably be moved inside)
+* `cuda_tensor_helper:` a tiny Python extension module that provides helpers to convert CUDA memory pointers to PyTorch tensors. It's separate from `habitat_ml_renderer` because it must be [built](cuda_tensor_helper/setup.py) using a special PyTorch-provided CUDAExtension helper.
 * `magnum_root:` where `build_magnum.sh` clones, builds, and installs Magnum repos.
 * `data:` a folder for runtime data like test 3D models.
 there).
