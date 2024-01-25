@@ -15,7 +15,7 @@ This package is based on [Habitat-sim](https://github.com/facebookresearch/habit
         * We need to update both the RGB and depth interfaces.
     * Populate scenes with instances by calling `add_node_hierarchy(scene_id, "Duck")`.
     * Add a Python batch API for `Renderer::updateCamera`. The Python caller should pass in numpy arrays (`py::array_t<float>` in pybind11) that specify all data for all envs, e.g. a batch camera matrix would be (#envs x 4 x 4). Set env cameras in test.py.
-    * Add a Python batch API for `Renderer::transformations`. It's not yet clear to me what this should look like, since different envs might have different number of instances. Update env instances between steps to produce a sequence of batch image tensors.
+    * Add a Python batch API for `Renderer::transformations`. It sounds like we should at least have one version of this API that assumes the same number of instanes per env, thus this is a simple (non-ragged) (#envs x #num-instances x 4 x 4) tensor.
     * Save out color and depth tensors as image files so we can visually inspect the end-to-end results.
     * Experiment with lights (add bindings as necessary).
 * Repo cleanup
