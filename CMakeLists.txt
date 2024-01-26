@@ -2,6 +2,9 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+# todo: figure out what to use for project and what to put for languages
+project(my_project LANGUAGES C CXX)
+
 # todo: figure out what to put here
 cmake_minimum_required(VERSION 3.12)
 
@@ -40,12 +43,14 @@ if(POLICY CMP0007)
     cmake_policy(SET CMP0007 NEW)
 endif()
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/magnum_root/magnum/modules/;${CMAKE_MODULE_PATH}")
+# Include the FindEGL.cmake script
+include(FindEGL)
+message("FindEGL.cmake EGL_LIBRARY: ${EGL_LIBRARY}, EGL_INCLUDE_DIR: ${EGL_INCLUDE_DIR}")
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-# todo: figure out what to use for project and what to put for languages
-project(my_project LANGUAGES C CXX)
 
 # this is not working; not sure why
 # set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/external/install_root")
