@@ -35,6 +35,7 @@ fi
 # Navigate into the build directory
 cd ${BUILD_DIR}
 # Run CMake with the specified build type
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../magnum_root/install_root -DCMAKE_PREFIX_PATH=${PYTHON_SITE_PACKAGES} ..
+# Maybe MAGNUM_TARGET_EGL=ON is needed here? See also build_magnum.sh
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../magnum_root/install_root -DCMAKE_PREFIX_PATH=${PYTHON_SITE_PACKAGES} -DMAGNUM_TARGET_EGL=ON ..
 # Run make to build the project
 make && cp ./habitat_ml_renderer/*.so ../

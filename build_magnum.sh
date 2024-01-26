@@ -72,7 +72,7 @@ cd magnum
 clean_and_create_build_dir
 
 # See also gfx_batch/CMakeLists.txt find_package(Magnum ...). See also https://doc.magnum.graphics/magnum/building.html#building-features.
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../../install_root -DMAGNUM_WITH_WINDOWLESSGLXAPPLICATION=ON -DMAGNUM_WITH_MESHTOOLS=ON -DMAGNUM_WITH_OPENGLTESTER=ON -DMAGNUM_WITH_DEBUGTOOLS=ON -DMAGNUM_WITH_ANYIMAGECONVERTER=ON -DMAGNUM_WITH_ANYSCENEIMPORTER=ON -DMAGNUM_WITH_ANYIMAGEIMPORTER=ON ..
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../../install_root -DMAGNUM_TARGET_EGL=ON -DMAGNUM_WITH_WINDOWLESSEGLAPPLICATION=ON -DMAGNUM_WITH_MESHTOOLS=ON -DMAGNUM_WITH_OPENGLTESTER=ON -DMAGNUM_WITH_DEBUGTOOLS=ON -DMAGNUM_WITH_ANYIMAGECONVERTER=ON -DMAGNUM_WITH_ANYSCENEIMPORTER=ON -DMAGNUM_WITH_ANYIMAGEIMPORTER=ON ..
 check_command "Running CMake for magnum"
 make
 check_command "Building magnum"
@@ -88,7 +88,8 @@ cd magnum-plugins
 clean_and_create_build_dir
 
 # See also gfx_batch/CMakeLists.txt find_package(MagnumPlugins ...). See also See also https://doc.magnum.graphics/magnum/building-plugins.html#building-plugins-manual.
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../../install_root -DMAGNUM_WITH_GLTFIMPORTER=ON -DMAGNUM_WITH_PNGIMPORTER=ON ..
+# I hit crashes in GLX on Ubuntu so trying MAGNUM_TARGET_EGL=ON.
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../../install_root -DMAGNUM_TARGET_EGL=ON -DMAGNUM_WITH_GLTFIMPORTER=ON -DMAGNUM_WITH_PNGIMPORTER=ON ..
 check_command "Running CMake for magnum-plugins"
 make
 check_command "Building magnum-plugins"
