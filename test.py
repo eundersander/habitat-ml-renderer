@@ -5,7 +5,6 @@ import torch  # isort:skip # noqa: F401  must import torch before importing cuda
 import cuda_tensor_helper
 import habitat_ml_renderer as hmr
 import numpy as np
-import pyrr
 
 
 def perspective_projection_matrix(fov_y, aspect_ratio, near, far):

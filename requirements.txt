@@ -2,4 +2,3 @@ numpy
 
 # only needed for testing/debugging
 pillow
-pyrr

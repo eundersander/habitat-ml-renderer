@@ -13,7 +13,7 @@ This project is based on the [`esp/gfx_batch`](https://github.com/facebookresear
 - [Habitat-ml-renderer](#habitat-ml-renderer)
 - [Todo](#todo)
 - [Directory structure](#directory-structure)
-- [Building](#building)
+- [Building and testing](#building-and-testing)
 - [System overview](#system-overview)
   - [Rendering 3D scenes](#rendering-3d-scenes)
   - [Batch rollouts](#batch-rollouts)
@@ -50,7 +50,7 @@ This project is based on the [`esp/gfx_batch`](https://github.com/facebookresear
 * `data:` a folder for runtime data like test 3D models, including `Duck.glb`.
 there).
 
-# Building
+# Building and testing
 
 ```
 # install some conda/mamba items
@@ -65,7 +65,7 @@ mamba install pytorch pytorch-cuda=11.8 -c pytorch -c nvidia
 which nvcc
 
 # install pip requirements
-pip install requirements.txt
+pip install -r requirements.txt
 
 # build/install cuda_tensor_helper
 cd cuda_tensor_helper
