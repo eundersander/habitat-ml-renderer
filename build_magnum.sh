@@ -8,6 +8,13 @@ check_command() {
   fi
 }
 
+# portable "number of CPUs"
+if command -v nproc >/dev/null 2>&1; then
+    JOBS=$(nproc)
+else
+    JOBS=$(sysctl -n hw.ncpu)
+fi
+
 # Helper function to clean and create the build directory
 clean_and_create_build_dir() {
   # If --clean was provided, remove the build directory
@@ -57,10 +64,8 @@ clean_and_create_build_dir
 
 # Run CMake and make
 cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../../install_root ..
-check_command "Running CMake for corrade"
-make
-check_command "Building corrade"
-make install
+cmake --build . --target install -- -j"$JOBS"
+check_command "Build and install corrade"
 cd ../../
 
 # Clone the magnum repository if it doesn't exist
@@ -73,10 +78,8 @@ clean_and_create_build_dir
 
 # See also gfx_batch/CMakeLists.txt find_package(Magnum ...). See also https://doc.magnum.graphics/magnum/building.html#building-features.
 cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../../install_root -DMAGNUM_TARGET_EGL=ON -DMAGNUM_WITH_WINDOWLESSEGLAPPLICATION=ON -DMAGNUM_WITH_MESHTOOLS=ON -DMAGNUM_WITH_OPENGLTESTER=ON -DMAGNUM_WITH_DEBUGTOOLS=ON -DMAGNUM_WITH_ANYIMAGECONVERTER=ON -DMAGNUM_WITH_ANYSCENEIMPORTER=ON -DMAGNUM_WITH_ANYIMAGEIMPORTER=ON ..
-check_command "Running CMake for magnum"
-make
-check_command "Building magnum"
-make install
+cmake --build . --target install -- -j"$JOBS"
+check_command "Build and install magnum"
 cd ../../
 
 # Clone the magnum-plugins repository if it doesn't exist
@@ -90,9 +93,7 @@ clean_and_create_build_dir
 # See also gfx_batch/CMakeLists.txt find_package(MagnumPlugins ...). See also See also https://doc.magnum.graphics/magnum/building-plugins.html#building-plugins-manual.
 # I hit crashes in GLX on Ubuntu so trying MAGNUM_TARGET_EGL=ON.
 cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../../install_root -DMAGNUM_TARGET_EGL=ON -DMAGNUM_WITH_GLTFIMPORTER=ON -DMAGNUM_WITH_PNGIMPORTER=ON ..
-check_command "Running CMake for magnum-plugins"
-make
-check_command "Building magnum-plugins"
-make install
+cmake --build . --target install -- -j"$JOBS"
+check_command "Build and install magnum-plugins"
 cd ../../
 

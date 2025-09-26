@@ -54,7 +54,7 @@ there).
 
 ```
 # install some conda/mamba items
-mamba install cmake pybind11
+mamba install python==3.10 cmake pybind11
 
 # install pytorch with CUDA. We don't require a specific CUDA version. See https://pytorch.org/get-started/locally/ for latest instructions.
 mamba install pytorch pytorch-cuda=12.4 -c pytorch -c nvidia

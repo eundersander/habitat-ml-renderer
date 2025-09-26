@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# portable "number of CPUs"
+if command -v nproc >/dev/null 2>&1; then
+    JOBS=$(nproc)
+else
+    JOBS=$(sysctl -n hw.ncpu)
+fi
+
 # Get the site-packages directory
 PYTHON_SITE_PACKAGES=$(python -c "import site; print(site.getsitepackages()[0])")
 # Check if the pybind11 directory exists
@@ -37,5 +44,6 @@ cd ${BUILD_DIR}
 # Run CMake with the specified build type
 # Maybe MAGNUM_TARGET_EGL=ON is needed here? See also build_magnum.sh
 cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=../magnum_root/install_root -DCMAKE_PREFIX_PATH=${PYTHON_SITE_PACKAGES} -DMAGNUM_TARGET_EGL=ON ..
-# Run make to build the project
-make && cp ./habitat_ml_renderer/*.so ../
+# build the project
+cmake --build . --target all -- -j"$JOBS"
+cp ./habitat_ml_renderer/*.so ../

@@ -1,4 +1,3 @@
-
 # external folder created by build_magnum.sh
 magnum_root/install_root
 magnum_root/corrade
@@ -15,3 +14,6 @@ habitat_ml_renderer.*.so
 cuda_tensor_helper_src/cuda_tensor_helper.*.so
 
 .vscode/
+
+# temp files produced by test.py
+/output_*.png
