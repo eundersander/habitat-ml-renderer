@@ -1,0 +1,9 @@
+[build-system]
+# torch must be here because setup.py imports it during build
+requires = ["setuptools>=64", "wheel", "torch"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cuda_tensor_helper"
+version = "0.0.0"
+dependencies = ["torch"]   # optional, but keeps runtime in sync

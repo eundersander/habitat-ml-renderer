@@ -8,10 +8,10 @@ magnum_root/magnum-plugins
 # intermediate build files
 build/
 build_debug/
-cuda_tensor_helper/cuda_tensor_helper.egg-info/
+cuda_tensor_helper_src/cuda_tensor_helper.egg-info/
 
 # our binary python extensions
 habitat_ml_renderer.*.so
-cuda_tensor_helper/cuda_tensor_helper.*.so
+cuda_tensor_helper_src/cuda_tensor_helper.*.so
 
 .vscode/

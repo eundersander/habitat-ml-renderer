@@ -57,7 +57,7 @@ there).
 mamba install cmake pybind11
 
 # install pytorch with CUDA. We don't require a specific CUDA version. See https://pytorch.org/get-started/locally/ for latest instructions.
-mamba install pytorch pytorch-cuda=11.8 -c pytorch -c nvidia
+mamba install pytorch pytorch-cuda=12.4 -c pytorch -c nvidia
 
 # install CUDA toolkit (not shown). See https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html .
 
@@ -68,8 +68,8 @@ which nvcc
 pip install -r requirements.txt
 
 # build/install cuda_tensor_helper
-cd cuda_tensor_helper
-pip install -e .
+cd cuda_tensor_helper_src
+pip install -e . --no-build-isolation
 cd ../
 
 # build magnum. Optional args: --debug and --clean.
