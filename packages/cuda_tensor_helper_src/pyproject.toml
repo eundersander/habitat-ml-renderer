@@ -1,0 +1,9 @@
+[build-system]
+# We require torch to build, but we must use the user's version (--no-build-isolation)
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cuda_tensor_helper"
+version = "0.0.0"
+dependencies = ["torch"]

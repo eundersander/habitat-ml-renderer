@@ -43,6 +43,20 @@ if(POLICY CMP0007)
     cmake_policy(SET CMP0007 NEW)
 endif()
 
+# Reasonable defaults (can be overridden with -D...)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
+list(APPEND CMAKE_PREFIX_PATH
+    "${CMAKE_SOURCE_DIR}/magnum_root/install_root")
+
+if(NOT CMAKE_PREFIX_PATH AND DEFINED ENV{PYTHON_SITE_PACKAGES})
+  # Use the same env var your script relied on
+  set(CMAKE_PREFIX_PATH $ENV{PYTHON_SITE_PACKAGES}
+      CACHE PATH "Prefix path for Python packages" FORCE)
+endif()
+
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/magnum_root/magnum/modules/;${CMAKE_MODULE_PATH}")
 # Include the FindEGL.cmake script
 include(FindEGL)
@@ -51,9 +65,6 @@ message("FindEGL.cmake EGL_LIBRARY: ${EGL_LIBRARY}, EGL_INCLUDE_DIR: ${EGL_INCLU
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-# this is not working; not sure why
-# set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/external/install_root")
 
 # todo: when this is off, figure out why we hit runtime undefined symbol: cudaGraphicsMapResources
 set(BUILD_WITH_CUDA ON)
@@ -78,7 +89,7 @@ find_package(
   Shaders
   Trade
 )
-find_package(Corrade REQUIRED Utility)
+find_package(Corrade REQUIRED Utility Containers PluginManager)
 
-add_subdirectory(gfx_batch)
-add_subdirectory(habitat_ml_renderer)
+add_subdirectory(libs/gfx_batch)
+add_subdirectory(packages/habitat_ml_renderer)

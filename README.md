@@ -45,7 +45,7 @@ This project is based on the [`esp/gfx_batch`](https://github.com/facebookresear
 * `habitat_ml_renderer:` the Python extension module. It's primarily C++ pybind11 code wrapping renderer functionality provided by `gfx_batch`.
 * `gfx_batch:` a pure C++ library that implements the renderer (on top of Magnum). It's essentially a copy-paste of the [`esp/gfx_batch`](https://github.com/facebookresearch/habitat-sim/tree/main/src/esp/gfx_batch) module in Habitat-sim.
 * `shaders:` used by `gfx_batch` (and should probably be moved inside)
-* `cuda_tensor_helper:` a tiny Python extension module that provides helpers to convert CUDA memory pointers to PyTorch tensors. It's separate from `habitat_ml_renderer` because it must be [built](cuda_tensor_helper/setup.py) using a special PyTorch-provided CUDAExtension helper which tends to not give us enough control over the build settings (e.g. there is no CMakeLists.txt). 
+* `cuda_tensor_helper:` a tiny Python extension module that provides helpers to convert CUDA memory pointers to PyTorch tensors. It's separate from `habitat_ml_renderer` because it's [built](cuda_tensor_helper/setup.py) using a PyTorch-provided CUDAExtension helper, which brings various C++ quirks such as using an older ABI.
 * `magnum_root:` where `build_magnum.sh` clones, builds, and installs Magnum repos.
 * `data:` a folder for runtime data like test 3D models, including `Duck.glb`.
 there).
