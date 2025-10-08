@@ -42,6 +42,9 @@ fi
 # Navigate into the build directory
 cd ${BUILD_DIR}
 # Run CMake with the specified build type
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .. -DBUILD_TEST=1
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+  -DBUILD_TEST=1 \
+  -DEGL_INCLUDE_DIR=$PWD/../third_party/egl_headers \
+  ..
 # build the project
 cmake --build . --target all -- -j"$JOBS"

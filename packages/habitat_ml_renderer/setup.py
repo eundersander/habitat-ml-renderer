@@ -13,9 +13,14 @@ class CMakeExtension(Extension):
 class CMakeBuild(build_ext):
     def build_extension(self, ext):
         extdir = pathlib.Path(self.get_ext_fullpath(ext.name)).parent.absolute()
+
+        repo_root = pathlib.Path(__file__).resolve().parent.parent.parent
+        egl_headers = repo_root / "third_party" / "egl_headers"
+
         cmake_args = [
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
+            f"-DEGL_INCLUDE_DIR={egl_headers}",
         ]
 
         build_args = []
