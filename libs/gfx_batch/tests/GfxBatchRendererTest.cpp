@@ -38,7 +38,7 @@
 #endif
 
 // todo: organize this better
-const char* TEST_ASSETS = "data";
+const char* TEST_ASSETS = "library_data/test_assets";
 const char* MAGNUMRENDERERTEST_OUTPUT_DIR = ".";
 
 namespace {

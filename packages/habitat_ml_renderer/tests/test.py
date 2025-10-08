@@ -51,7 +51,7 @@ def main():
     num_envs=num_envs)
 
   # add all the 3D model files that will be used
-  renderer.add_file("data/Duck.glb", "Duck", whole=True)
+  renderer.add_file("library_data/test_assets/objects/Duck.glb", "Duck", whole=True)
 
   # Construct scenes by instancing node hierarchies by name. They can be posed later.
   instances_by_scene = [[]] * num_envs

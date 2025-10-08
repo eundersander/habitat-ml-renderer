@@ -2,6 +2,29 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+find_package(
+  Magnum
+  REQUIRED
+  DebugTools
+  AnyImageConverter
+  AnySceneImporter
+  AnyImageImporter
+)
+find_package(
+  MagnumPlugins
+  REQUIRED
+#  BasisImporter
+  GltfImporter
+#  KtxImporter
+#  OpenExrImporter
+#  OpenExrImageConverter
+#  StanfordImporter
+#  StbImageImporter
+#  StbImageConverter
+#  UfbxImporter
+  OPTIONAL_COMPONENTS GltfSceneConverter KtxImageConverter
+)
+
 corrade_add_test(
   GfxBatchHbaoTest
   GfxBatchHbaoTest.cpp
@@ -10,11 +33,11 @@ corrade_add_test(
   Magnum::DebugTools
   Magnum::OpenGLTester
   Magnum::MeshTools
-  # Magnum::AnyImageConverter
+  Magnum::AnyImageConverter
   Magnum::AnyImageImporter
   Magnum::AnySceneImporter
-#   MagnumPlugins::OpenExrImageConverter
-#   MagnumPlugins::OpenExrImporter
+#  MagnumPlugins::OpenExrImageConverter
+#  MagnumPlugins::OpenExrImporter
 #   MagnumPlugins::StanfordImporter
 #   MagnumPlugins::StbImageImporter
 #   MagnumPlugins::StbImageConverter

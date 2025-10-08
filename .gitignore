@@ -1,19 +1,23 @@
-# external folder created by build_magnum.sh
-magnum_root/install_root
-magnum_root/corrade
-magnum_root/magnum
-magnum_root/magnum-plugins
+# folder created by build_magnum.sh
+/magnum_root
+
+# folder created by build_mochi.sh
+/mochi
+
+# external data location where users download data
+/data
 
 # intermediate build files
-build/
-build_debug/
-cuda_tensor_helper_src/cuda_tensor_helper.egg-info/
+/build/
+/build_debug/
+/packages/cuda_tensor_helper_src/cuda_tensor_helper.egg-info/
 
 # our binary python extensions
-habitat_ml_renderer.*.so
-cuda_tensor_helper_src/cuda_tensor_helper.*.so
+/packages/habitat_ml_renderer/habitat_ml_renderer.*.so
+/packages/cuda_tensor_helper_src/cuda_tensor_helper.*.so
 
 .vscode/
 
 # temp files produced by test.py
 /output_*.png
+
