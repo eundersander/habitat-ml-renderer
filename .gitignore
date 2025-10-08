@@ -11,12 +11,15 @@
 /build/
 /build_debug/
 /packages/cuda_tensor_helper_src/cuda_tensor_helper.egg-info/
+/packages/tbd/src/tbd.egg-info
 
 # our binary python extensions
 /packages/habitat_ml_renderer/habitat_ml_renderer.*.so
 /packages/cuda_tensor_helper_src/cuda_tensor_helper.*.so
 
 .vscode/
+
+__pycache__/
 
 # temp files produced by test.py
 /output_*.png
