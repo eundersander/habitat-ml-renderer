@@ -91,6 +91,7 @@ cmake \
   -DMAGNUM_WITH_ANYSCENEIMPORTER=ON \
   -DMAGNUM_WITH_ANYIMAGEIMPORTER=ON \
   -DEGL_INCLUDE_DIR=../../../third_party/egl_headers \
+  -DEGL_LIBRARY=/usr/lib/x86_64-linux-gnu/libEGL.so.1 \
   ..
 cmake --build . --target install -- -j"$JOBS"
 check_command "Build and install magnum"
@@ -113,7 +114,6 @@ cmake \
   -DMAGNUM_WITH_GLTFIMPORTER=ON \
   -DMAGNUM_WITH_PNGIMPORTER=ON \
   -DMAGNUM_WITH_KTXIMPORTER=ON \
-  -DEGL_INCLUDE_DIR=../../../third_party/egl_headers \
   ..
 
 cmake --build . --target install -- -j"$JOBS"

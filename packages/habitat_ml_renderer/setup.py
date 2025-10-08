@@ -21,6 +21,8 @@ class CMakeBuild(build_ext):
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
             f"-DEGL_INCLUDE_DIR={egl_headers}",
+            # temp hack: hard-code libEGL.so path
+            f"-DEGL_LIBRARY=/usr/lib/x86_64-linux-gnu/libEGL.so.1",
         ]
 
         build_args = []
