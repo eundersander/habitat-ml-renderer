@@ -90,7 +90,7 @@ cmake \
   -DMAGNUM_WITH_ANYIMAGECONVERTER=ON \
   -DMAGNUM_WITH_ANYSCENEIMPORTER=ON \
   -DMAGNUM_WITH_ANYIMAGEIMPORTER=ON \
-  -DEGL_INCLUDE_DIR=../../../third_party/egl_headers \
+  -DEGL_INCLUDE_DIR=../../../cpp/third_party/egl_headers \
   -DEGL_LIBRARY=/usr/lib/x86_64-linux-gnu/libEGL.so.1 \
   ..
 cmake --build . --target install -- -j"$JOBS"

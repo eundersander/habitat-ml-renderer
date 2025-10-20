@@ -48,8 +48,11 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 
+# Set install directory to project root/install
+set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/.." CACHE PATH "Install directory" FORCE)
+
 list(APPEND CMAKE_PREFIX_PATH
-    "${CMAKE_SOURCE_DIR}/magnum_root/install_root")
+    "${CMAKE_SOURCE_DIR}/../magnum_root/install_root")
 
 if(NOT CMAKE_PREFIX_PATH AND DEFINED ENV{PYTHON_SITE_PACKAGES})
   # Use the same env var your script relied on
@@ -57,7 +60,7 @@ if(NOT CMAKE_PREFIX_PATH AND DEFINED ENV{PYTHON_SITE_PACKAGES})
       CACHE PATH "Prefix path for Python packages" FORCE)
 endif()
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/magnum_root/magnum/modules/;${CMAKE_MODULE_PATH}")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../magnum_root/magnum/modules/;${CMAKE_MODULE_PATH}")
 # Include the FindEGL.cmake script
 include(FindEGL)
 message("FindEGL.cmake EGL_LIBRARY: ${EGL_LIBRARY}, EGL_INCLUDE_DIR: ${EGL_INCLUDE_DIR}")
@@ -66,16 +69,20 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-# todo: when this is off, figure out why we hit runtime undefined symbol: cudaGraphicsMapResources
-set(BUILD_WITH_CUDA ON)
-if(BUILD_WITH_CUDA)
-  # C++ preprocessor also uses this flag, so add this defintion
-  add_definitions(-DBUILD_WITH_CUDA)
+# CUDA support - only enable on Linux systems with CUDA available
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    # todo: when this is off, figure out why we hit runtime undefined symbol: cudaGraphicsMapResources
+    set(BUILD_WITH_CUDA ON)
+    if(BUILD_WITH_CUDA)
+        # C++ preprocessor also uses this flag, so add this defintion
+        add_definitions(-DBUILD_WITH_CUDA)
+        enable_language(CUDA)
+        include_directories("/usr/local/cuda-12.3/targets/x86_64-linux/include")
+    endif()
+else()
+    message(STATUS "CUDA disabled on non-Linux platforms")
+    set(BUILD_WITH_CUDA OFF)
 endif()
-
-enable_language(CUDA)
-
-include_directories("/usr/local/cuda-12.3/targets/x86_64-linux/include")
 
 set(PYBIND11_PYTHON_VERSION 3.7 CACHE STRING "")
 # you should have invoked with cmake -DCMAKE_PREFIX_PATH=/path/to/pybind11 ..
@@ -92,4 +99,5 @@ find_package(
 find_package(Corrade REQUIRED Utility Containers PluginManager)
 
 add_subdirectory(libs/gfx_batch)
-add_subdirectory(packages/habitat_ml_renderer)
+add_subdirectory(extensions/habitat_ml_renderer)
+add_subdirectory(tests)

@@ -10,12 +10,15 @@
 # intermediate build files
 /build/
 /build_debug/
-/packages/cuda_tensor_helper_src/cuda_tensor_helper.egg-info/
-/packages/tbd/src/tbd.egg-info
+/cpp/build/
+/install/
+/python/cuda_tensor_helper_src/cuda_tensor_helper.egg-info/
+/python/habitat_ml_renderer/habitat_ml_renderer.egg-info/
+/python/tbd/src/tbd.egg-info
 
 # our binary python extensions
-/packages/habitat_ml_renderer/habitat_ml_renderer.*.so
-/packages/cuda_tensor_helper_src/cuda_tensor_helper.*.so
+/python/habitat_ml_renderer/habitat_ml_renderer.*.so
+/python/cuda_tensor_helper_src/cuda_tensor_helper.*.so
 
 .vscode/
 

@@ -8,6 +8,7 @@ except ImportError:
         "Did you forget to use --no-build-isolation?\n"
     )
 
+# todo: investigate torch compile for going from cpp -> extension
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 import os, sys
 

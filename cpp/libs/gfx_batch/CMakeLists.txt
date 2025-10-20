@@ -93,6 +93,10 @@ target_link_libraries(
   # data it uses, not everything to handle general file formats.
 )
 
+# Install the gfx_batch library
+install(TARGETS gfx_batch 
+        ARCHIVE DESTINATION lib)
+
 if(BUILD_TEST)
   add_subdirectory(tests)
 endif()
