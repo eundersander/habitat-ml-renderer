@@ -18,10 +18,20 @@ from setuptools.command.install import install
 
 
 def create_symlink_to_extension():
-    """Create a symlink from the package to the built extension in install/"""
-    # Path to the built extension in install/
-    install_dir = pathlib.Path(__file__).parent.parent.parent / "install" / "lib"
-    extension_file = install_dir / "habitat_ml_renderer.so"
+    """Create a symlink from the package to the built extension in lib/"""
+    # Path to the built extension in project root lib/
+    project_root = pathlib.Path(__file__).parent.parent.parent
+    lib_dir = project_root / "lib"
+    
+    # Look for the actual extension file (name varies by platform/Python version)
+    extension_files = list(lib_dir.glob("habitat_ml_renderer*.so"))
+    
+    if not extension_files:
+        print(f"Warning: No habitat_ml_renderer extension found in {lib_dir}")
+        print("Make sure to run tools/build_cpp.sh first!")
+        return
+    
+    extension_file = extension_files[0]  # Use the first match
     
     # Path where the symlink should be created (in the Python package)
     package_dir = pathlib.Path(__file__).parent / "habitat_ml_renderer" 
@@ -32,13 +42,9 @@ def create_symlink_to_extension():
     if symlink_target.exists() or symlink_target.is_symlink():
         symlink_target.unlink()
     
-    # Create the symlink if the extension exists
-    if extension_file.exists():
-        symlink_target.symlink_to(extension_file.resolve())
-        print(f"Created symlink: {symlink_target} -> {extension_file}")
-    else:
-        print(f"Warning: Extension not found at {extension_file}")
-        print("Make sure to run tools/build_cpp.sh first!")
+    # Create the symlink
+    symlink_target.symlink_to(extension_file.resolve())
+    print(f"Created symlink: {symlink_target} -> {extension_file}")
 
 
 class DevelopCommand(develop):
