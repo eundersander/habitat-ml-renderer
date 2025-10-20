@@ -8,8 +8,6 @@
 /data
 
 # intermediate build files
-/build/
-/build_debug/
 /cpp/build/
 /install/
 /python/cuda_tensor_helper_src/cuda_tensor_helper.egg-info/
