@@ -15,7 +15,7 @@ habitat/
 │   └── third_party/         # External C++ dependencies
 ├── python/                   # Python packages
 │   ├── habitat_ml_renderer/  # Main Python package
-│   └── cuda_tensor_helper/  # CUDA tensor utilities
+│   └── tbd/                 # Additional utilities
 ├── applications/            # Team applications
 ├── tests/                   # Python integration tests
 ├── tools/                   # Build scripts
@@ -38,7 +38,7 @@ mamba create -n habitat python=3.10 cmake
 mamba activate habitat
 
 # For Linux with CUDA:
-mamba install pybind11 pytorch pytorch-cuda=12.4 -c pytorch -c nvidia
+mamba install pybind11 pytorch pytorch-cuda=12.4 cupy -c pytorch -c nvidia -c conda-forge
 
 # For macOS (limited functionality):
 mamba install pybind11 pytorch -c pytorch
@@ -55,7 +55,6 @@ mamba install pybind11 pytorch -c pytorch
 
 # 3. Install Python packages
 pip install -e python/habitat_ml_renderer/
-pip install -e python/cuda_tensor_helper/ --no-build-isolation
 
 # 4. Optional: Install other packages
 pip install -e python/tbd/
@@ -70,8 +69,8 @@ pytest tests/
 # Run C++ tests (when built)
 ./cpp/build/tests/test_integration
 
-# Run integration test
-python python/habitat_ml_renderer/tests/test.py
+# Run integration test with CuPy
+python tests/test_habitat_ml_renderer.py
 ```
 
 ## Development Workflow
